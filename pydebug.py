@@ -4,6 +4,7 @@ import code
 import socket
 import code
 import debugthread
+import io
 
 foo="xxx"
 
@@ -13,5 +14,6 @@ s.bind(('127.0.0.1', 4711))
 s.listen(0)
 while True:
     ss, addr = s.accept()
-    f = ss.makefile('r+', 0)
-    debugthread.shell(f, locals())
+    stdin =io.TextIOWrapper(ss.makefile('rb', 0), encoding='utf8')
+    stdout = io.TextIOWrapper(ss.makefile('wb', 0), encoding='utf8')
+    debugthread.shell(stdin, stdout, stdout, locals())

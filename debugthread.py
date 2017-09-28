@@ -24,11 +24,11 @@ ThreadStd('stdin')
 ThreadStd('stdout')
 ThreadStd('stderr')
 
-def shell(file, local=None):
+def shell(stdin, stdout, stderr, local=None):
     def shell():
-        sys.thread_std.stdout = file
-        sys.thread_std.stdin = file
-        sys.thread_std.stderr = file
+        sys.thread_std.stdin = stdin
+        sys.thread_std.stdout = stdout
+        sys.thread_std.stderr = stderr
         code.interact(local=local)
     threading.Thread(target=shell).run()
     
